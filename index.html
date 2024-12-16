@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dorkify - A Google Dorking Tool</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #2980b9, #8e44ad);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px 20px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1, h2 {
+            margin-bottom: 20px;
+            color: #ffcc00;
+        }
+
+        label {
+            font-size: 1.2rem;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0px 0px 5px #ffcc00;
+        }
+
+        .button-category {
+            margin: 20px 0;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            background: #ffcc00;
+            color: #2c3e50;
+            font-size: 0.9rem;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background: #2c3e50;
+            color: #ffcc00;
+            transform: scale(1.05);
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #ccc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: #ffcc00;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dorkify - A Google Dorking Tool</h1>
+        <label for="domain">Enter Domain (e.g., example.com):</label><br>
+        <input type="text" id="domain" placeholder="example.com">
+
+        <!-- Dork Categories -->
+        <div class="button-category">
+            <h2>Directory Listing</h2>
+            <div class="button-container">
+
+                <button id="dork1"><b>intitle:index.of</b></button>
+                <button id="dork2"><b>intitle:"Index of /"</b></button>
+                <button id="dork3"><b>intitle:"index of" "parent directory"</b></button>
+                <button id="dork4"><b>intitle:"index of" inurl:ftp</b></button>
+                <button id="dork5"><b>intitle:"index of" inurl:admin</b></button>
+                <button id="dork6"><b>intitle:"index of" "/etc/"</b></button>
+                <button id="dork7"><b>intitle:"index of" "/var/log/"</b></button>
+                <button id="dork8"><b>intitle:"index of" "password"</b></button>
+                <button id="dork9"><b>intitle:"index of" "backup"</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Wordpress</h2>
+            <div class="button-container">
+
+                <button id="dork10"><b>inurl:wp- | inurl:wp-content | inurl:plugins | inurl:uploads | inurl:themes | inurl:download</b></button>
+                <button id="dork11"><b>inurl:wp-content | inurl:wp-includes</b></button>
+                <button id="dork12"><b>intitle:index of /wp-content</b></button>
+                <button id="dork13"><b>intitle:index of /wp-content/uploads</b></button>
+                <button id="dork14"><b>inurl:"wp-admin"</b></button>
+                <button id="dork15"><b>intitle:"Powered by WordPress"</b></button>
+                <button id="dork16"><b>inurl:"/wp-login.php"</b></button>
+                <button id="dork17"><b>inurl:"/wp-register.php"</b></button>
+                <button id="dork18"><b>inurl:"/xmlrpc.php"</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Swagger</h2>
+            <div class="button-container">
+
+                <button id="dork19"><b>intitle:"swagger ui"</b></button>
+                <button id="dork20"><b>intitle:"swagger-ui" inurl:"/swagger"</b></button>
+                <button id="dork21"><b>intitle:"swagger" "API documentation"</b></button>
+                <button id="dork22"><b>inurl:"/swagger-ui.html"</b></button>
+                <button id="dork23"><b>inurl:"/api-docs" intitle:"swagger"</b></button>
+                <button id="dork24"><b>intitle:"swagger" "Try it out"</b></button>
+                <button id="dork25"><b>intitle:"swagger ui" inurl:"api-docs"</b></button>
+                <button id="dork26"><b>intitle:"api documentation" inurl:"swagger"</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Publicly Available Documents</h2>
+            <div class="button-container">
+
+                <button id="dork27"><b>ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Login Pages</h2>
+            <div class="button-container">
+
+                <button id="dork28"><b>inurl:login | inurl:signin | intitle:Login | intitle: signin | inurl:auth</b></button>
+                <button id="dork29"><b>inurl:"admin/login"</b></button>
+                <button id="dork30"><b>inurl:"admin/signin"</b></button>
+                <button id="dork31"><b>intitle:"admin login"</b></button>
+                <button id="dork32"><b>intitle:"administrator sign in"</b></button>
+                <button id="dork33"><b>inurl:"administrator/login"</b></button>
+                <button id="dork34"><b>inurl:"/user/login"</b></button>
+                <button id="dork35"><b>inurl:"/login.jsp"</b></button>
+                <button id="dork36"><b>inurl:"/admin.php"</b></button>
+                <button id="dork37"><b>inurl:"/cpanel"</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Old Pages</h2>
+            <div class="button-container">
+
+                <button id="dork38"><b>ext:html | ext:php | ext:asp | ext:aspx</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Database Files</h2>
+            <div class="button-container">
+
+                <button id="dork39"><b>ext:sql | ext:db | ext:dbf | ext:mdb | ext:accdb | ext:sqlite | ext:sqlite3</b></button>
+                <button id="dork40"><b>inurl:"/backup/" ext:sql</b></button>
+                <button id="dork41"><b>inurl:"/dump/" ext:sql</b></button>
+                <button id="dork42"><b>inurl:"/database/" ext:db</b></button>
+                <button id="dork43"><b>intitle:"index of" "database.sql"</b></button>
+                <button id="dork44"><b>intitle:"index of" "dump.sql"</b></button>
+                <button id="dork45"><b>inurl:"db" ext:xml</b></button>
+                <button id="dork46"><b>intitle:"index of" "db.zip"</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Backup Files</h2>
+            <div class="button-container">
+
+                <button id="dork47"><b>ext:bkf | ext:bkp | ext:bak | ext:old | ext:backup</b></button>
+                <button id="dork48"><b>inurl: "/backup/"</b></button>
+                <button id="dork49"><b>inurl: "/backups/"</b></button>
+                <button id="dork50"><b>intitle:"index of" "backup"</b></button>
+                <button id="dork51"><b>intitle:"index of" "database.bak"</b></button>
+                <button id="dork52"><b>intitle:"index of" "website_backup.zip"</b></button>
+                <button id="dork53"><b>intitle:"index of" "db_backup.sql.gz"</b></button>
+                <button id="dork54"><b>intitle:"index of" "backup.tar.gz"</b></button>
+                <button id="dork55"><b>inurl:"wp-config.php.bak"</b></button>
+                <button id="dork56"><b>inurl:"/old_backup/"</b></button>
+                <button id="dork57"><b>"backup of" ext:gz | ext:sql | ext:zip | ext:tar | ext:rar | ext:7z | ext:bkf | ext:bkp | ext:bak | ext:old | ext:backup</b></button>
+                <button id="dork58"><b>"backup file" ext:sql | ext:gz | ext:zip | ext:tar | ext:rar | ext:7z | ext:bkf | ext:bkp | ext:bak | ext:old | ext:backup</b></button>
+                <button id="dork59"><b>intitle:"index of" "/wp-content/bak"</b></button>
+                <button id="dork60"><b>intitle:"index of" "/wp-content/backup"</b></button>
+                <button id="dork61"><b>inurl: "/wp-content/backup-"</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Configuration Files</h2>
+            <div class="button-container">
+
+                <button id="dork62"><b>ext:xml | ext:config | ext:conf | ext:cnf | ext:reg | ext:inf | ext:rdp | ext:cfg | ext:txt | ext:ora | ext:ini | ext: yaml | ext:yml | ext:json</b></button>
+                <button id="dork63"><b>filetype:config "apache"</b></button>
+                <button id="dork64"><b>ext:php intitle:phpinfo "published by the PHP Group"</b></button>
+                <button id="dork65"><b>inurl:readme | inurl:license | inurl:install | inurl:setup | inurl:config</b></button>
+                <button id="dork66"><b>inurl:"/phpinfo.php" | inurl: ".htaccess"</b></button>
+                <button id="dork67"><b>inurl:"wp-config.php"</b></button>
+                <button id="dork68"><b>inurl:".env"</b></button>
+                <button id="dork69"><b>inurl:"/appsettings.json"</b></button>
+                <button id="dork70"><b>inurl:"settings.py"</b></button>
+                <button id="dork71"><b>inurl:"config.js"</b></button>
+                <button id="dork72"><b>inurl:"/config/" ext:bak</b></button>
+                <button id="dork73"><b>inurl:"config.old"</b></button>
+                <button id="dork74"><b>inurl:"settings.json.bak"</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Log Files</h2>
+            <div class="button-container">
+
+                <button id="dork75"><b>ext:log</b></button>
+                <button id="dork76"><b>intitle:"index of" "logs"</b></button>
+                <button id="dork77"><b>inurl: "/logs/" ext:log</b></button>
+                <button id="dork78"><b>inurl: "/logfile/"</b></button>
+                <button id="dork79"><b>inurl: "/logs/" ext:bak</b></button>
+                <button id="dork80"><b>intitle:"index of" "log.bak"</b></button>
+                <button id="dork81"><b>intitle:"index of" "log.zip"</b></button>
+                <button id="dork82"><b>intitle:"index of" "log.tar.gz"</b></button>
+                <button id="dork83"><b>intitle:"logfile" "debug"</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>SQL Errors</h2>
+            <div class="button-container">
+
+                <button id="dork84"><b>intext:"sql syntax near" | intext:"syntax error has occurred" | intext:"incorrect syntax near" | intext:"unexpected end of SQL command" | intext:"Warning: mysql_connect()" | intext:"Warning: mysql_query()" | intext:"Warning: pg_connect()"</b></button>
+                <button id="dork85"><b>"error in your SQL"</b></button>
+                <button id="dork86"><b>"You have an error in your SQL syntax"</b></button>
+                <button id="dork87"><b>"Warning: mysql_*"</b></button>
+                <button id="dork88"><b>"Unclosed quotation mark after the character string"</b></button>
+                <button id="dork89"><b>"supplied argument is not a valid MySQL"</b></button>
+                <button id="dork90"><b>"ODBC SQL Server Driver"</b></button>
+                <button id="dork91"><b>"Microsoft OLE DB Provider for SQL Server"</b></button>
+                <button id="dork92"><b>"SQL syntax near"</b></button>
+                <button id="dork93"><b>"unexpected end of SQL command"</b></button>
+                <button id="dork94"><b>"PostgreSQL query failed"</b></button>
+                <button id="dork95"><b>"ORA-01756"</b></button>
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Error Pages</h2>
+            <div class="button-container">
+
+                <button id="dork96"><b>"Uncaught Error: Call to undefined function"</b></button>
+                <button id="dork97"><b>"WordPress database error:"</b></button>
+                <button id="dork98"><b>"PHP Fatal"</b></button>
+                <button id="dork99"><b>"Unclosed quotation mark"</b></button>
+                <button id="dork100"><b>"Error Executing Database Query"</b></button>
+                <button id="dork101"><b>mysql_num_rows() "error"</b></button>
+                <button id="dork102"><b>mysql_fetch_array() "error"</b></button>
+                <button id="dork103"><b>mysql_query() "error"</b></button>
+                <button id="dork104"><b>"SQL syntax near"</b></button>
+                <button id="dork105"><b>"not found in D:\"</b></button>
+                <button id="dork106"><b>"not found in E:\"</b></button>
+                <button id="dork107"><b>"not found in F:\"</b></button>
+
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>File Upload</h2>
+            <div class="button-container">
+
+                <button id="dork108"><b>"ChooseFile"</b></button>
+                <button id="dork109"><b>"No file chosen"</b></button>
+                <button id="dork110"><b>"Upload"</b></button>
+                <button id="dork111"><b>"Upload here"</b></button>
+                <button id="dork112"><b>"Upload a file"</b></button>
+                <button id="dork113"><b>"Please upload your"</b></button>
+                
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Redirection</h2>
+            <div class="button-container">
+                <button id="dork114"><b>inurl:url= | inurl:return= | inurl:next= | inurl:redirect= | inurl:redir= | inurl:ret= | inurl:r2= | inurl:src=http | inurl:r=http | inurl:page= inurl:& inurl:http</b></button>
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Information Disclosure</h2>
+            <div class="button-container">
+
+                <button id="dork115"><b>inurl:/libs/granite/core</b></button>
+                <button id="dork116"><b>inurl:/content/dam</b></button>
+                <button id="dork117"><b>inurl:/content/dam ext:xls | ext:xlsx</b></button>
+                <button id="dork118"><b>inurl:app_dev.php | inurl:app_dev</b></button>
+                <button id="dork119"><b>inurl:_profiler | inurl:profiler</b></button>
+                <button id="dork120"><b>inurl:wp-content/uploads/ "@gmail.com" ext:xls | ext:xlsx | ext:pdf | ext:odt | ext:odf | ext:doc | ext:docx | ext:csv | ext:db | ext:sql | ext:ini | ext:config | ext:conf | ext:ppt | ext:pptx | ext:zip</b></button>
+                <button id="dork121"><b>inurl:wp-content/uploads/ "date of birth" ext:xls | ext:xlsx | ext:pdf | ext:odt | ext:odf | ext:doc | ext:docx | ext:csv | ext:db | ext:sql | ext:ini | ext:config | ext:conf | ext:ppt | ext:pptx | ext:zip</b></button>
+                <button id="dork122"><b>inurl:wp-content/uploads/ "INTERNAL USE ONLY" ext:xls | ext:xlsx | ext:pdf | ext:odt | ext:odf | ext:doc | ext:docx | ext:csv | ext:db | ext:sql | ext:ini | ext:config | ext:conf | ext:ppt | ext:pptx | ext:zip</b></button>
+                <button id="dork123"><b>inurl:/wp-content/ inurl:private</b></button>
+                <button id="dork124"><b>inurl:/wp-content/ inurl:internal</b></button>
+                <button id="dork125"><b>Powered by AList</b></button>
+                <button id="dork126"><b>ext:pdf "CONFIDENTIAL" | "STRICTLY CONFIDENTIAL" | "HIGHLY CONFIDENTIAL" | "PRIVATE" | "PRIVATE AND CONFIDENTIAL" | "PRIVATE AND SENSITIVE" | "COMPANY SENSITIVE"</b></button>
+                <button id="dork127"><b>ext:doc "CONFIDENTIAL" | "STRICTLY CONFIDENTIAL" | "HIGHLY CONFIDENTIAL" | "PRIVATE" | "PRIVATE AND CONFIDENTIAL" | "PRIVATE AND SENSITIVE" | "COMPANY SENSITIVE"</b></button>
+                <button id="dork128"><b>ext:docx "CONFIDENTIAL" | "STRICTLY CONFIDENTIAL" | "HIGHLY CONFIDENTIAL" | "PRIVATE" | "PRIVATE AND CONFIDENTIAL" | "PRIVATE AND SENSITIVE" | "COMPANY SENSITIVE"</b></button>
+                <button id="dork129"><b>ext:ppt "CONFIDENTIAL" | "STRICTLY CONFIDENTIAL" | "HIGHLY CONFIDENTIAL" | "PRIVATE" | "PRIVATE AND CONFIDENTIAL" | "PRIVATE AND SENSITIVE" | "COMPANY SENSITIVE"</b></button>
+                <button id="dork130"><b>ext:pptx "CONFIDENTIAL" | "STRICTLY CONFIDENTIAL" | "HIGHLY CONFIDENTIAL" | "PRIVATE" | "PRIVATE AND CONFIDENTIAL" | "PRIVATE AND SENSITIVE" | "COMPANY SENSITIVE"</b></button>
+                
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>API Endpoints</h2>
+            <div class="button-container">
+
+                <button id="dork131"><b>filetype:wsdl | filetype:WSDL | ext:svc | inurl:wsdl | Filetype: ?wsdl | inurl:asmx?wsdl | inurl:jws?wsdl | intitle:_vti_bin/sites.asmx?wsdl | inurl:_vti_bin/sites.asmx?wsdl</b></button>
+                <button id="dork132"><b>inurl:/api/v1/ | inurl:/api/v2/ | inurl:/api/v3/ | inurl:/api/v4/</b></button>
+                <button id="dork133"><b>inurl:/api/v1/splashmodal</b></button>
+                
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>PII Disclosure</h2>
+            <div class="button-container">
+
+                <button id="dork134"><b>intitle:"index of /" "aadhaar" intext:.jpg | intext:.jpeg | intext:.png</b></button>
+                <button id="dork135"><b>intitle:"index of /" "aadhaar"  inurl:upload</b></button>
+                <button id="dork136"><b>intitle:"index of /" "passport"  inurl:uploads</b></button>
+                <button id="dork137"><b>intitle:"index of /" "SSN"  inurl:upload | inurl:private | inurl:documents</b></button>
+                <button id="dork138"><b>intitle:"index of /" "social security number"  inurl:upload</b></button>
+                
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Unauthenticated Dashboards & Services</h2>
+            <div class="button-container">
+
+                <button id="dork139"><b>intitle:"Grafana" inurl:"/dashboard/db"</b></button>
+                <button id="dork140"><b>intitle:"Roxy file manager"</b></button>
+                <button id="dork141"><b>inurl:/plesk-stat/webstat</b></button>
+                <button id="dork142"><b>"Prometheus Time Series Collection and Processing Server"</b></button>
+                <button id="dork143"><b>iTop Installation Wizard "Prerequisites validation"</b></button>
+                <button id="dork144"><b>"Powered by ZFile"</b></button>
+                <button id="dork145"><b>"set up the administrator user" inurl:pivot</b></button>
+                <button id="dork146"><b>inurl:/sidekiq intext:"memory usage" intext:"polling interval"</b></button>
+                <button id="dork147"><b>intitle:xprober intext:CPU</b></button>
+                <button id="dork148"><b>inurl:/xprober ext:php</b></button>
+                <button id="dork149"><b>inurl:8080/dashboard | inurl:8081/dashboard</b></button>
+                <button id="dork150"><b>intitle:"Dashboard [Jenkins]" Credentials</b></button>
+                <button id="dork151"><b>intitle:"dashboard-confluence"</b></button>
+                <button id="dork152"><b>inurl:https://wiki. .com/confluence/</b></button>
+                <button id="dork153"><b>allinurl: /confluence/login.action?</b></button>
+                <button id="dork154"><b>inurl:/spacedirectory/view.action | inurl:/pages/viewpage.action? | inurl:/pages/releaseview.action?</b></button>
+                <button id="dork155"><b>inurl:main ext:php "Welcome to phpMyAdmin" "running on"</b></button>
+                <button id="dork156"><b>"Welcome to phpMyAdmin" "running on" inurl:main.php</b></button>
+                <button id="dork157"><b>inurl:main.php phpMyAdmin | inurl:main.php "Welcome to phpMyAdmin" | inurl:sql.php "phpmyadmin | inurl:sql "phpmyadmin""</b></button>
+                <button id="dork158"><b>inurl:kibana inurl:app | inurl:kibana inurl:app inurl:5601</b></button>
+                
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Cloud Services</h2>
+            <div class="button-container">
+
+                <button id="dork159"><b>site:s3.amazonaws.com</b></button>
+                <button id="dork160"><b>site:*.s3.amazonaws.com</b></button>
+                <button id="dork161"><b>site:*.*.s3.amazonaws.com</b></button>
+                <button id="dork162"><b>site:*.*.*.s3.amazonaws.com</b></button>
+                <button id="dork163"><b>inurl:"s3.amazonaws.com"</b></button>
+                <button id="dork164"><b>site:*.s3.amazonaws.com intitle:"Bucket loading"</b></button>
+                <button id="dork165"><b>site:blob.core.windows.net</b></button>
+                <button id="dork166"><b>site:googleapis.com</b></button>
+                <button id="dork167"><b>site:drive.google.com</b></button>
+                <button id="dork168"><b>site:dev.azure.com</b></button>
+                <button id="dork169"><b>site:onedrive.live.com</b></button>
+                <button id="dork170"><b>site:digitaloceanspaces.com</b></button>
+                <button id="dork171"><b>site:sharepoint.com</b></button>
+                <button id="dork172"><b>site:s3-external-1.amazonaws.com</b></button>
+                <button id="dork173"><b>site:s3.dualstack.us-east-1.amazonaws.com</b></button>
+                <button id="dork174"><b>site:dropbox.com/s</b></button>
+                <button id="dork175"><b>site:box.com/s</b></button>
+                <button id="dork176"><b>site:docs.google.com inurl:"/d/"</b></button>
+                
+            </div>
+        </div>
+
+        <div class="button-category">
+            <h2>Spring Boot</h2>
+            <div class="button-container">
+
+                <button id="dork177"><b>inurl:/actuator/prometheus "jvm_memory_max_bytes"</b></button>
+                <button id="dork178"><b>inurl:/actuator/prometheus "jvm_gc_pause_seconds"</b></button>
+                <button id="dork179"><b>inurl:/actuator/conditions | inurl:/actuator/configprops | inurl:/actuator/loggers | inurl:/actuator/threaddump | inurl:/actuator/scheduledtasks | inurl:/actuator/mappings | inurl:/actuator/env | inurl:/actuator/heapdump</b></button>
+                
+            </div>
+        </div>
+
+        <footer>
+            Built with ❤️ for quick Google dorking.
+            <div class="social-icons">
+                <a href="https://github.com/kundandhupkar" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/kundan-dhupkar" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://twitter.com/kundan_dhupkar" target="_blank"><i class="fab fa-twitter"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Define all the dorks with a query format
+        const dorks = {
+            // Directory Listing
+            'dork1': { query: 'site:{domain} intitle:index.of' },
+            'dork2': { query: 'site:{domain} intitle:"Index of /"' },
+            'dork3': { query: 'site:{domain} intitle:"index of" "parent directory"' },
+            'dork4': { query: 'site:{domain} intitle:"index of" inurl:ftp' },
+            'dork5': { query: 'site:{domain} intitle:"index of" inurl:admin' },
+            'dork6': { query: 'site:{domain} intitle:"index of" "/etc/"' },
+            'dork7': { query: 'site:{domain} intitle:"index of" "/var/log/"' },
+            'dork8': { query: 'site:{domain} intitle:"index of" "password"' },
+            'dork9': { query: 'site:{domain} intitle:"index of" "backup"' },
+            // Wordpress
+            'dork10': { query: 'site:{domain} inurl:wp- | inurl:wp-content | inurl:plugins | inurl:uploads | inurl:themes | inurl:download' },
+            'dork11': { query: 'site:{domain} inurl:wp-content | inurl:wp-includes' },
+            'dork12': { query: 'site:{domain} intitle:index of /wp-content' },
+            'dork13': { query: 'site:{domain} intitle:index of /wp-content/uploads' },
+            'dork14': { query: 'site:{domain} inurl:"wp-admin"' },
+            'dork15': { query: 'site:{domain} intitle:"Powered by WordPress"' },
+            'dork16': { query: 'site:{domain} inurl:"/wp-login.php"' },
+            'dork17': { query: 'site:{domain} inurl:"/wp-register.php"' },
+            'dork18': { query: 'site:{domain} inurl:"/xmlrpc.php"' },
+            // Swagger
+            'dork19': { query: 'site:{domain} intitle:"swagger ui"' },
+            'dork20': { query: 'site:{domain} intitle:"swagger-ui" inurl:"/swagger"' },
+            'dork21': { query: 'site:{domain} intitle:"swagger" "API documentation"' },
+            'dork22': { query: 'site:{domain} inurl:"/swagger-ui.html"' },
+            'dork23': { query: 'site:{domain} inurl:"/api-docs" intitle:"swagger"' },
+            'dork24': { query: 'site:{domain} intitle:"swagger" "Try it out"' },
+            'dork25': { query: 'site:{domain} intitle:"swagger ui" inurl:"api-docs"' },
+            'dork26': { query: 'site:{domain} intitle:"api documentation" inurl:"swagger"' },
+            // Publicly Available Docs
+            'dork27': { query: 'site:{domain} ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv' },
+            // Login Pages
+            'dork28': { query: 'site:{domain} inurl:login | inurl:signin | intitle:Login | intitle: signin | inurl:auth' },
+            'dork29': { query: 'site:{domain} inurl:"admin/login"' },
+            'dork30': { query: 'site:{domain} inurl:"admin/signin"' },
+            'dork31': { query: 'site:{domain} intitle:"admin login"' },
+            'dork32': { query: 'site:{domain} intitle:"administrator sign in"' },
+            'dork33': { query: 'site:{domain} inurl:"administrator/login"' },
+            'dork34': { query: 'site:{domain} inurl:"/user/login"' },
+            'dork35': { query: 'site:{domain} inurl:"/login.jsp"' },
+            'dork36': { query: 'site:{domain} inurl:"/admin.php"' },
+            'dork37': { query: 'site:{domain} inurl:"/cpanel"' },
+            // Old Pages
+            'dork38': { query: 'site:{domain} ext:html | ext:php | ext:asp | ext:aspx' },
+            // Database Files
+            'dork39': { query: 'site:{domain} ext:sql | ext:db | ext:dbf | ext:mdb | ext:accdb | ext:sqlite | ext:sqlite3' },
+            'dork40': { query: 'site:{domain} inurl:"/backup/" ext:sql' },
+            'dork41': { query: 'site:{domain} inurl:"/dump/" ext:sql' },
+            'dork42': { query: 'site:{domain} inurl:"/database/" ext:db' },
+            'dork43': { query: 'site:{domain} intitle:"index of" "database.sql"' },
+            'dork44': { query: 'site:{domain} intitle:"index of" "dump.sql"' },
+            'dork45': { query: 'site:{domain} inurl:"db" ext:xml' },
+            'dork46': { query: 'site:{domain} intitle:"index of" "db.zip"' },
+            // Backup Files
+            'dork47': { query: 'site:{domain} ext:bkf | ext:bkp | ext:bak | ext:old | ext:backup' },
+            'dork48': { query: 'site:{domain} inurl: "/backup/"' },
+            'dork49': { query: 'site:{domain} inurl: "/backups/"' },
+            'dork50': { query: 'site:{domain} intitle:"index of" "backup"' },
+            'dork51': { query: 'site:{domain} intitle:"index of" "database.bak"' },
+            'dork52': { query: 'site:{domain} intitle:"index of" "website_backup.zip"' },
+            'dork53': { query: 'site:{domain} intitle:"index of" "db_backup.sql.gz"' },
+            'dork54': { query: 'site:{domain} intitle:"index of" "backup.tar.gz"' },
+            'dork55': { query: 'site:{domain} inurl:"wp-config.php.bak"' },
+            'dork56': { query: 'site:{domain} inurl:"/old_backup/"' },
+            'dork57': { query: 'site:{domain} "backup of" ext:gz | ext:sql | ext:zip | ext:tar | ext:rar | ext:7z | ext:bkf | ext:bkp | ext:bak | ext:old | ext:backup' },
+            'dork58': { query: 'site:{domain} "backup file" ext:sql | ext:gz | ext:zip | ext:tar | ext:rar | ext:7z | ext:bkf | ext:bkp | ext:bak | ext:old | ext:backup' },
+            'dork59': { query: 'site:{domain} intitle:"index of" "/wp-content/bak"' },
+            'dork60': { query: 'site:{domain} intitle:"index of" "/wp-content/backup"' },
+            'dork61': { query: 'site:{domain} inurl: "/wp-content/backup-"' },
+            // Configuration Files
+            'dork62': { query: 'site:{domain} ext:xml | ext:config | ext:conf | ext:cnf | ext:reg | ext:inf | ext:rdp | ext:cfg | ext:txt | ext:ora | ext:ini | ext: yaml | ext:yml | ext:json' },
+            'dork63': { query: 'site:{domain} filetype:config "apache"' },
+            'dork64': { query: 'site:{domain} ext:php intitle:phpinfo "published by the PHP Group"' },
+            'dork65': { query: 'site:{domain} inurl:readme | inurl:license | inurl:install | inurl:setup | inurl:config' },
+            'dork66': { query: 'site:{domain} inurl:"/phpinfo.php" | inurl: ".htaccess"' },
+            'dork67': { query: 'site:{domain} inurl:"wp-config.php"' },
+            'dork68': { query: 'site:{domain} inurl:".env"' },
+            'dork69': { query: 'site:{domain} intitle:"inurl:"/appsettings.json"' },
+            'dork70': { query: 'site:{domain} inurl:"settings.py"' },
+            'dork71': { query: 'site:{domain} inurl:"config.js"' },
+            'dork72': { query: 'site:{domain} inurl:"/config/" ext:bak' },
+            'dork73': { query: 'site:{domain} inurl:"config.old"' },
+            'dork74': { query: 'site:{domain} inurl:"settings.json.bak"' },
+            // Log Files
+            'dork75': { query: 'site:{domain} ext:log' },
+            'dork76': { query: 'site:{domain} intitle:"index of" "logs"' },
+            'dork77': { query: 'site:{domain} inurl: "/logs/" ext:log' },
+            'dork78': { query: 'site:{domain} inurl: "/logfile/"' },
+            'dork79': { query: 'site:{domain} inurl: "/logs/" ext:bak' },
+            'dork80': { query: 'site:{domain} intitle:"index of" "log.bak"' },
+            'dork81': { query: 'site:{domain} intitle:"index of" "log.zip"' },
+            'dork82': { query: 'site:{domain} intitle:"index of" "log.tar.gz"' },
+            'dork83': { query: 'site:{domain} intitle:"logfile" "debug"' },
+            // SQL Errors
+            'dork84': { query: 'site:{domain} intext:"sql syntax near" | intext:"syntax error has occurred" | intext:"incorrect syntax near" | intext:"unexpected end of SQL command" | intext:"Warning: mysql_connect()" | intext:"Warning: mysql_query()" | intext:"Warning: pg_connect()"' },
+            'dork85': { query: 'site:{domain} "error in your SQL"' },
+            'dork86': { query: 'site:{domain} "You have an error in your SQL syntax"' },
+            'dork87': { query: 'site:{domain} "Warning: mysql_*"' },
+            'dork88': { query: 'site:{domain} "Unclosed quotation mark after the character string"' },
+            'dork89': { query: 'site:{domain} "supplied argument is not a valid MySQL"' },
+            'dork90': { query: 'site:{domain} "ODBC SQL Server Driver"' },
+            'dork91': { query: 'site:{domain} "Microsoft OLE DB Provider for SQL Server"' },
+            'dork92': { query: 'site:{domain} "SQL syntax near"' },
+            'dork93': { query: 'site:{domain} "unexpected end of SQL command"' },
+            'dork94': { query: 'site:{domain} "PostgreSQL query failed"' },
+            'dork95': { query: 'site:{domain} "ORA-01756"' },
+            // Error Pages
+            'dork96': { query: 'site:{domain} "Uncaught Error: Call to undefined function"' },
+            'dork97': { query: 'site:{domain} "WordPress database error:"' },
+            'dork98': { query: 'site:{domain} "PHP Fatal"' },
+            'dork99': { query: 'site:{domain} "Unclosed quotation mark"' },
+            'dork100': { query: 'site:{domain} "Error Executing Database Query"' },
+            'dork101': { query: 'site:{domain} mysql_num_rows() "error"' },
+            'dork102': { query: 'site:{domain} mysql_fetch_array() "error"' },
+            'dork103': { query: 'site:{domain} mysql_query() "error"' },
+            'dork104': { query: 'site:{domain} "not found in C:\"' },
+            'dork105': { query: 'site:{domain} "not found in D:\"' },
+            'dork106': { query: 'site:{domain} "not found in E:\"' },
+            'dork107': { query: 'site:{domain} "not found in F:\"' },
+            // File Uploads
+            'dork108': { query: 'site:{domain} "Choose File"' },
+            'dork109': { query: 'site:{domain} "No file chosen"' },
+            'dork110': { query: 'site:{domain} "Upload"' },
+            'dork111': { query: 'site:{domain} "Upload here"' },
+            'dork112': { query: 'site:{domain} "Upload a file"' },
+            'dork113': { query: 'site:{domain} "Please upload your"' },
+            // Redirection
+            'dork114': { query: 'site:{domain} inurl:url= | inurl:return= | inurl:next= | inurl:redirect= | inurl:redir= | inurl:ret= | inurl:r2= | inurl:src=http | inurl:r=http | inurl:page= inurl:& inurl:http'},
+            // Information Disclosure
+            'dork115': { query: 'site:{domain} inurl:/libs/granite/core' },
+            'dork116': { query: 'site:{domain} inurl:/content/dam' },
+            'dork117': { query: 'site:{domain} inurl:/content/dam ext:xls | ext: xlsx' },
+            'dork118': { query: 'site:{domain} inurl:app_dev.php | inurl:app_dev' },
+            'dork119': { query: 'site:{domain} inurl:_profiler | inurl:profiler' },
+            'dork120': { query: 'site:{domain} inurl:wp-content/uploads/ "@gmail.com" ext:xls | ext:xlsx | ext:pdf | ext:odt | ext:odf | ext:doc | ext:docx | ext:csv | ext:db | ext:sql | ext:ini | ext:config | ext:conf | ext:ppt | ext:pptx | ext:zip' },
+            'dork121': { query: 'site:{domain} inurl:wp-content/uploads/ "date of birth" ext:xls | ext:xlsx | ext:pdf | ext:odt | ext:odf | ext:doc | ext:docx | ext:csv | ext:db | ext:sql | ext:ini | ext:config | ext:conf | ext:ppt | ext:pptx | ext:zip' },
+            'dork122': { query: 'site:{domain} inurl:wp-content/uploads/ "INTERNAL USE ONLY" ext:xls | ext:xlsx | ext:pdf | ext:odt | ext:odf | ext:doc | ext:docx | ext:csv | ext:db | ext:sql | ext:ini | ext:config | ext:conf | ext:ppt | ext:pptx | ext:zip' },
+            'dork123': { query: 'site:{domain} inurl:/wp-content/ inurl:private' },
+            'dork124': { query: 'site:{domain} inurl:/wp-content/ inurl:internal' },
+            'dork125': { query: 'site:{domain} "Powered by AList"' },
+            'dork126': { query: 'site:{domain} ext:pdf "CONFIDENTIAL" | "STRICTLY CONFIDENTIAL" | "HIGHLY CONFIDENTIAL" | "PRIVATE" | "PRIVATE AND CONFIDENTIAL" | "PRIVATE AND SENSITIVE" | "COMPANY SENSITIVE"' },
+            'dork127': { query: 'site:{domain} ext:doc "CONFIDENTIAL" | "STRICTLY CONFIDENTIAL" | "HIGHLY CONFIDENTIAL" | "PRIVATE" | "PRIVATE AND CONFIDENTIAL" | "PRIVATE AND SENSITIVE" | "COMPANY SENSITIVE"' },
+            'dork128': { query: 'site:{domain} ext:docx "CONFIDENTIAL" | "STRICTLY CONFIDENTIAL" | "HIGHLY CONFIDENTIAL" | "PRIVATE" | "PRIVATE AND CONFIDENTIAL" | "PRIVATE AND SENSITIVE" | "COMPANY SENSITIVE"' },
+            'dork129': { query: 'site:{domain} ext:ppt "CONFIDENTIAL" | "STRICTLY CONFIDENTIAL" | "HIGHLY CONFIDENTIAL" | "PRIVATE" | "PRIVATE AND CONFIDENTIAL" | "PRIVATE AND SENSITIVE" | "COMPANY SENSITIVE"' },
+            'dork130': { query: 'site:{domain} ext:pptx "CONFIDENTIAL" | "STRICTLY CONFIDENTIAL" | "HIGHLY CONFIDENTIAL" | "PRIVATE" | "PRIVATE AND CONFIDENTIAL" | "PRIVATE AND SENSITIVE" | "COMPANY SENSITIVE"' },
+            // API Endpoints
+            'dork131': { query: 'site:{domain} filetype:wsdl | filetype:WSDL | ext:svc | inurl:wsdl | Filetype: ?wsdl | inurl:asmx?wsdl | inurl:jws?wsdl | intitle:_vti_bin/sites.asmx?wsdl | inurl:_vti_bin/sites.asmx?wsdl' },
+            'dork132': { query: 'site:{domain} inurl:/api/v1/ | inurl:/api/v2/ | inurl:/api/v3/ | inurl:/api/v4/' },
+            'dork133': { query: 'site:{domain} inurl:/api/v1/splashmodal' },
+            // PII Disclosure
+            'dork134': { query: 'site:{domain} intitle:"index of /" "aadhaar" intext:.jpg | intext:.jpeg | intext:.png' },
+            'dork135': { query: 'site:{domain} intitle:"index of /" "aadhaar"  inurl:upload' },
+            'dork136': { query: 'site:{domain} intitle:"index of /" "passport"  inurl:uploads' },
+            'dork137': { query: 'site:{domain} intitle:"index of /" "SSN"  inurl:upload | inurl:private | inurl:documents' },
+            'dork138': { query: 'site:{domain} intitle:"index of /" "social security number"  inurl:upload' },
+            // Unauth Dashboards & Services
+            'dork139': { query: 'site:{domain} intitle:"Grafana" inurl:"/dashboard/db"' },
+            'dork140': { query: 'site:{domain} intitle:"Roxy file manager"' },
+            'dork141': { query: 'site:{domain} inurl:/plesk-stat/webstat' },
+            'dork142': { query: 'site:{domain} "Prometheus Time Series Collection and Processing Server"' },
+            'dork143': { query: 'site:{domain} iTop Installation Wizard "Prerequisites validation"' },
+            'dork144': { query: 'site:{domain} "Powered by ZFile"' },
+            'dork145': { query: 'site:{domain} "set up the administrator user" inurl:pivot' },
+            'dork146': { query: 'site:{domain} inurl:/sidekiq intext:"memory usage" intext:"polling interval"' },
+            'dork147': { query: 'site:{domain} intitle:xprober intext:CPU' },
+            'dork148': { query: 'site:{domain} inurl:/xprober ext:php' },
+            'dork149': { query: 'site:{domain} inurl:8080/dashboard | inurl:8081/dashboard' },
+            'dork150': { query: 'site:{domain} intitle:"Dashboard [Jenkins]" Credentials' },
+            'dork151': { query: 'site:{domain} intitle:dashboard-confluence' },
+            'dork152': { query: 'site:{domain} inurl:https://wiki. .com/confluence/' },
+            'dork153': { query: 'site:{domain} allinurl: /confluence/login.action?' },
+            'dork154': { query: 'site:{domain} inurl:/spacedirectory/view.action | inurl:/pages/viewpage.action? | inurl:/pages/releaseview.action?' },
+            'dork155': { query: 'site:{domain} inurl:main ext:php "Welcome to phpMyAdmin" "running on"' },
+            'dork156': { query: 'site:{domain} "Welcome to phpMyAdmin" "running on" inurl:main.php' },
+            'dork157': { query: 'site:{domain} inurl:main.php phpMyAdmin | inurl:main.php "Welcome to phpMyAdmin" | inurl:sql.php "phpmyadmin" | inurl:sql "phpmyadmin"' },
+            'dork158': { query: 'site:{domain} inurl:kibana inurl:app | inurl:kibana inurl:app inurl:5601' },
+            // Cloud Services
+            'dork159': { query: 'site:s3.amazonaws.com "{domain}"' },
+            'dork160': { query: 'site:*.s3.amazonaws.com "{domain}"' },
+            'dork161': { query: 'site:*.*.s3.amazonaws.com "{domain}"' },
+            'dork162': { query: 'site:*.*.*.s3.amazonaws.com "{domain}"' },
+            'dork163': { query: 'inurl:"s3.amazonaws.com" "{domain}"' },
+            'dork164': { query: 'site:*.s3.amazonaws.com intitle:"Bucket loading" "{domain}"' },
+            'dork165': { query: 'site:blob.core.windows.net "{domain}"' },
+            'dork166': { query: 'site:googleapis.com "{domain}"' },
+            'dork167': { query: 'site:drive.google.com "{domain}"' },
+            'dork168': { query: 'site:dev.azure.com "{domain}"' },
+            'dork169': { query: 'site:onedrive.live.com "{domain}"' },
+            'dork170': { query: 'site:digitaloceanspaces.com "{domain}"' },
+            'dork171': { query: 'site:sharepoint.com "{domain}"' },
+            'dork172': { query: 'site:s3-external-1.amazonaws.com "{domain}"' },
+            'dork173': { query: 'site:s3.dualstack.us-east-1.amazonaws.com "{domain}"' },
+            'dork174': { query: 'site:dropbox.com/s "{domain}"' },
+            'dork175': { query: 'site:box.com/s "{domain}"' },
+            'dork176': { query: 'site:docs.google.com inurl:"/d/" "{domain}"' },
+            // Spring Boot
+            'dork177': { query: 'site:{domain} inurl:/actuator/prometheus "jvm_memory_max_bytes"' },
+            'dork178': { query: 'site:{domain} inurl:/actuator/prometheus "jvm_gc_pause_seconds"' },
+            'dork179': { query: 'site:{domain} inurl:/actuator/conditions | inurl:/actuator/configprops | inurl:/actuator/loggers | inurl:/actuator/threaddump | inurl:/actuator/scheduledtasks | inurl:/actuator/mappings | inurl:/actuator/env | inurl:/actuator/heapdump' },
+            
+        };
+
+      // Total Dorks Count = 179
+
+        // Function to perform the Google search
+        function searchDork(dorkKey) {
+            const domain = document.getElementById('domain').value.trim();
+
+            if (!domain) {
+                alert('Please enter a domain.');
+                return;
+            }
+
+            const dorkConfig = dorks[dorkKey];
+
+            // Replace {domain} in the dork template with the user's domain
+            const query = dorkConfig.query.replace('{domain}', domain);
+            const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+
+            window.open(url, '_blank');
+        }
+
+        // Attach event listeners to buttons
+	for (let i = 1; i <= 999; i++) {
+    		document.getElementById(`dork${i}`).addEventListener('click', () => searchDork(`dork${i}`));
+	}
+
+    </script>
+</body>
+</html>
