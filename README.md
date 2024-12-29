@@ -47,7 +47,7 @@ The tool is hosted using **GitHub Pages**, making it accessible directly through
 
 ## Acknowledgements
 
-The dorks included in this tool were curated from publicly available resources. Special thanks to all those who contributed to creating and sharing these resources over time. This tool simply provides an easy interface for executing them.
+**The dorks included in this tool were curated from publicly available resources. Special thanks to all those who contributed to creating and sharing these resources over time. This tool simply provides an easy interface for executing them.**
 
 ## License
 
