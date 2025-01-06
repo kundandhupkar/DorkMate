@@ -1,7 +1,7 @@
 # DorkMate
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/9b9c4c0b-1aa1-4891-a420-7abeb7826b9d" width="500" />
+  <img src="https://github.com/user-attachments/assets/5a4c6acc-17b2-4a8e-a673-a4104e0ec92e" width="500" />
 </p>
 
 This tool is a simple and intuitive web-based interface for performing Google dork searches. It helps with information gathering, OSINT, and reconnaissance by organizing dorks into meaningful categories. 
