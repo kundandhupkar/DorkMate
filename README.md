@@ -1,4 +1,4 @@
-# Dorkify
+# DorkMate
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/9b9c4c0b-1aa1-4891-a420-7abeb7826b9d" width="500" />
@@ -37,7 +37,7 @@ The tool is hosted using **GitHub Pages**, making it accessible directly through
 
 ## How to Use
 
-1. Open the tool in your browser: [Dorkify](https://kundandhupkar.github.io/Dorkify)
+1. Open the tool in your browser: [DorkMate](https://kundandhupkar.github.io/DorkMate)
 2. Enter the target domain (e.g., `example.com`) in the input field.
 3. Browse the categories and click on the desired button to execute a search.
 
